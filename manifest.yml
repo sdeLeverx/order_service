@@ -1,0 +1,7 @@
+---
+applications:
+  - name: order-service
+    path: srv/target/order-service-exec.jar
+    random-route: true
+    services:
+      - order-service-hana
