@@ -4,4 +4,4 @@ applications:
     path: srv/target/order-service-exec.jar
     random-route: true
     services:
-      - order-service-hana
+      - orders-hana
