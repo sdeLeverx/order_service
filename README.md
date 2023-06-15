@@ -2,9 +2,9 @@
 
 Order Service is an application implemented using SAP CAP, SAP HANA integrating with Java/Spring Boot.
 
-## Running project loccally
+## Running project locally
 
-Use the package manager [maven](https://maven.apache.org/) to to run locally.
+Use the package manager [maven](https://maven.apache.org/) to run locally.
 
 ```bash
 # maven
