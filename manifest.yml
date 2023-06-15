@@ -5,3 +5,4 @@ applications:
     random-route: true
     services:
       - orders-hana
+      - orders-xsuaa
