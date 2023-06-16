@@ -12,8 +12,6 @@ import org.springframework.stereotype.Component;
 import cds.gen.productservice.ProductService_;
 import cds.gen.productservice.Products_;
 
-import java.util.HashMap;
-import java.util.Map;
 
 @Component
 @Slf4j
