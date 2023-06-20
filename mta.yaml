@@ -1,0 +1,38 @@
+_schema-version: '3.1'
+ID: order-service
+version: 1.0.0-SNAPSHOT
+description: "order-service application"
+parameters:
+  enable-parallel-deployments: true
+modules:
+  - name: order-service-srv
+    type: java
+    path: srv
+    parameters:
+      buildpack: sap_java_buildpack
+    properties:
+      SPRING_PROFILES_ACTIVE: cloud,sandbox
+      JBP_CONFIG_COMPONENTS: "jres: ['com.sap.xs.java.buildpack.jre.SAPMachineJRE']"
+      JBP_CONFIG_SAP_MACHINE_JRE: '{ use_offline_repository: false, version: 17.+ }'
+    build-parameters:
+      builder: custom
+      commands:
+        - mvn clean package -DskipTests=true
+      build-result: target/*-exec.jar
+    provides:
+      - name: srv-api # required by consumers of CAP services (e.g. approuter)
+        properties:
+          srv-url: ${default-url}
+    requires:
+      - name: order-service-auth
+
+resources:
+  - name: order-service-auth
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: application
+      path: ./xs-security.json
+      config:
+        xsappname: order-service-${org}-${space}
+        tenant-mode: dedicated
