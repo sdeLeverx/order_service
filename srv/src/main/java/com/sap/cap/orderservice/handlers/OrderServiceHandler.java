@@ -12,14 +12,11 @@ import org.springframework.stereotype.Component;
 import cds.gen.productservice.ProductService_;
 import cds.gen.productservice.Products_;
 
-import java.util.HashMap;
-import java.util.Map;
 
 @Component
 @Slf4j
 @ServiceName(ProductService_.CDS_NAME)
 public class OrderServiceHandler implements EventHandler {
-    private Map<Object, Map<String, Object>> products = new HashMap<>();
 
     @On(event = CqnService.EVENT_CREATE, entity = Products_.CDS_NAME)
     public void onCreate(CdsCreateEventContext context) {
@@ -30,7 +27,6 @@ public class OrderServiceHandler implements EventHandler {
     @On(event = CqnService.EVENT_READ, entity = Products_.CDS_NAME)
     public void onRead(CdsReadEventContext context) {
         log.info(" --- INFO --- [ Products are fetching! ] ");
-//        context.setResult(products.values());
     }
 
     @On(event = CqnService.EVENT_DELETE, entity = Products_.CDS_NAME)

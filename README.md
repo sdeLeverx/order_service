@@ -14,7 +14,7 @@ mvn spring-boot:run
 
 ## SAP HANA
 
-After providing SAP HANA Cloud instance, configured the file .cdsrc.json in the root folder.
+After providing SAP HANA Cloud instance, added cds-feature-hana dependency and configured the file .cdsrc.json in the root folder.
 
 ```bash
 {
@@ -27,10 +27,18 @@ After providing SAP HANA Cloud instance, configured the file .cdsrc.json in the 
 Implicitly pushed all artifacts to the database.
 
 ```bash
-cds deploy --to hana:bookstore-hana --store-credentials
+cds deploy --to hana:orders-hana --store-credentials
 ```
 
 ## Deploying it to CF
+
+Run the following command to configure which Cloud Foundry environment you want to connect to in the terminal.
+
+```bash
+cf api <CF_API_ENDPOINT>
+
+cf login
+```
 
 To deploy project into Cloud Foundry created a application manifest and enabled application for Cloud Foundry.
 
@@ -42,7 +50,7 @@ cf push
 cf apps
 ```
 
-## XSUAA 
+## XSUAA for local
 
 While enabling application for Cloud Foundry by adding the cds-starter-cloudfoundry dependency it enabled CAP Java’s secure-by-default behaviour based on Spring Security. Now we should add some custom mock users to the application via adding the security section to the application.yaml file.
 
@@ -54,6 +62,39 @@ While enabling application for Cloud Foundry by adding the cds-starter-cloudfoun
           password: admin
           roles:
             - admin
+```
+
+## XSUAA for Cloud Foundry
+
+First we should generate security descriptor.
+
+```bash
+cds compile srv/ --to xsuaa > xs-security.json
+```
+
+Updated application manifest.
+
+```bash
+---
+applications:
+  - name: order-service
+    path: srv/target/order-service-exec.jar
+    random-route: true
+    services:
+      - orders-hana
+      - orders-xsuaa
+```
+
+Then, created instance of the Authorization and Trust Management Service
+
+```bash
+cf create-service xsuaa application orders-xsuaa -c xs-security.json
+```
+
+In order to get environment variables for OAuth 2.0, we shoould run following command:
+
+```bash
+cf env order-service 
 ```
 
 ## Contributing
