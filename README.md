@@ -12,6 +12,9 @@ mvn clean install
 mvn spring-boot:run
 ```
 
+http://localhost:8080/
+http://localhost:8080/api/browse/Products
+
 ## SAP HANA
 
 After providing SAP HANA Cloud instance, added cds-feature-hana dependency and configured the file .cdsrc.json in the root folder.

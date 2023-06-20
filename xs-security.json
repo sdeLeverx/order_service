@@ -22,7 +22,9 @@
     {
       "name": "orders_admin",
       "description": "Order Service Admin",
-      "role-template-references": ["$XSAPPNAME.admin"]
+      "role-template-references": [
+        "$XSAPPNAME.admin"
+      ]
     }
   ]
 }
