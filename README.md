@@ -12,7 +12,10 @@ mvn clean install
 mvn spring-boot:run
 ```
 
-http://localhost:8080/
+## Open local application
+
+http://localhost:8080
+
 http://localhost:8080/api/browse/Products
 
 ## SAP HANA
